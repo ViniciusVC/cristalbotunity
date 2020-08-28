@@ -6,4 +6,16 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/_Completed-Game/scenes/MenuInicio.unity
+  - enabled: 1
+    path: Assets/_Completed-Game/scenes/espaco.unity
+  - enabled: 1
     path: Assets/_Completed-Game/scenes/marte1.unity
+  - enabled: 1
+    path: Assets/_Completed-Game/scenes/lua1.unity
+  - enabled: 1
+    path: Assets/_Completed-Game/scenes/plutao1.unity
+  - enabled: 1
+    path: Assets/_Completed-Game/scenes/mercurio1.unity
+  - enabled: 1
+    path: Assets/_Completed-Game/scenes/venus1.unity

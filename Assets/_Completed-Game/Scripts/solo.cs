@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class solo : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+	//void Start () { }
+	//void Update () { }
 
 	void OnTriggerEnter(Collider other) 
 	{
@@ -24,14 +17,10 @@ public class solo : MonoBehaviour {
 			// colidiu com um objeto com a tag 'Tambor'?
 			print("Meteoro chegou ao solo.");
 			//Random randNum = new Random();
-			//print();
-			//print();
-			//Vector3 tamanhoMeteoro = new Vector3 (10.0f, 10.0f, 10.0f);
-			//other.gameObject.transform.localScale = PorcentagemBarra;
 			Vector3 NovaPosicaoMeteoro = new Vector3 (Random.Range(-15.0f, 10.0f), 16.0f, Random.Range(20.0f, 70.0f));
 			//Vector3 NovaPosicaoMeteoro = new Vector3 (-15.0f, 16.0f, 70.0f);
 			other.gameObject.transform.localPosition = NovaPosicaoMeteoro;
-			// //other.gameObject.SetActive(false);
+			// other.gameObject.SetActive(false);
 		}
 	}
 }

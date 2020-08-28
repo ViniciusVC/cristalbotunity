@@ -6,7 +6,7 @@
     <ProductVersion>10.0.20506</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <RootNamespace></RootNamespace>
-    <ProjectGuid>{78C67B82-979E-2F46-179A-1F0390A34CB5}</ProjectGuid>
+    <ProjectGuid>{636E0946-6D42-6C50-94AA-2C1ADCB7A636}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <AssemblyName>Assembly-CSharp</AssemblyName>
@@ -50,14 +50,15 @@
      <Compile Include="Assets\_Completed-Game\Scripts\CameraController.cs" />
      <Compile Include="Assets\_Completed-Game\Scripts\ControlePanel.cs" />
      <Compile Include="Assets\_Completed-Game\Scripts\Cristal.cs" />
+     <Compile Include="Assets\_Completed-Game\Scripts\CristalControler.cs" />
+     <Compile Include="Assets\_Completed-Game\Scripts\CristalLabControler.cs" />
+     <Compile Include="Assets\_Completed-Game\Scripts\FimFaseController.cs" />
      <Compile Include="Assets\_Completed-Game\Scripts\GiraPlayer.cs" />
      <Compile Include="Assets\_Completed-Game\Scripts\GiraRodas.cs" />
-     <Compile Include="Assets\_Completed-Game\Scripts\MenuInicial.cs" />
      <Compile Include="Assets\_Completed-Game\Scripts\NaveControler.cs" />
      <Compile Include="Assets\_Completed-Game\Scripts\PlayerController.cs" />
      <Compile Include="Assets\_Completed-Game\Scripts\PortaControler.cs" />
-     <Compile Include="Assets\_Completed-Game\Scripts\Rotator.cs" />
-     <Compile Include="Assets\_Completed-Game\Scripts\Tambor.cs" />
+     <Compile Include="Assets\_Completed-Game\Scripts\controleEfeitos.cs" />
      <Compile Include="Assets\_Completed-Game\Scripts\controleMenu.cs" />
      <Compile Include="Assets\_Completed-Game\Scripts\solo.cs" />
  <Reference Include="UnityEngine.UI">

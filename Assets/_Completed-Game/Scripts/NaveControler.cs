@@ -13,7 +13,8 @@ public class NaveControler : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		varStatusNave = ""; //varStatusNave=("", "nivel1","nivel2","nivel3")
+		varStatusNave="nivel1";
+		//varStatusNave = ""; //varStatusNave=("", "nivel1","nivel2","nivel3")
 		posicaoZAtual = -26f;//-10f; //de -6.95f.
 		posicaoYAtual = 3.0f;
 	}
@@ -75,6 +76,7 @@ public class NaveControler : MonoBehaviour {
 
 	private void FuncAbrirPorta()
 	{
+		print("NaveControle->FuncAbrirPorta()->PortaControler.varStatusPorta = abrindo");
 		PortaControler.varStatusPorta = "abrindo"; //"", "abrindo", "fechando"
 		AudioControler.rodarSom = "PortaNave"; // "PortaNave","Cristal","SemEnergia"		
 	}

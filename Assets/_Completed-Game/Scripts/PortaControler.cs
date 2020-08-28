@@ -17,20 +17,20 @@ public class PortaControler : MonoBehaviour {
 		NivelAtual="";
 	}
 	
-	private void AbrirPorta()
+	public void AbrirPorta()
 	{
 		varStatusPorta = "abrindo";
-		AudioControler.rodarSom = "PortaNave"; // "PortaNave","Cristal","SemEnergia"		
+		// AudioControler.rodarSom = "PortaNave"; // "PortaNave","Cristal","SemEnergia"		
 	}
 
-	private void FecharPorta()
+	public void FecharPorta()
 	{
 		varStatusPorta = "fechando";
-		AudioControler.rodarSom = "PortaNave"; // "PortaNave","Cristal","SemEnergia"		
-		// float AnguloPorta = 10.0f;
-		// //Vector3 NovaPosicaoPorta = new Vector3 (AnguloPorta, 90.0f, 90.0f);
-		// objPortaNave.gameObject.transform.Rotate(new Vector3 (0.0f, 1.0f, 0.0f));
-		AudioControler.rodarSom = "PortaNave"; // "PortaNave","Cristal","SemEnergia", "meteoro", "vooDaNave"
+		// AudioControler.rodarSom = "PortaNave"; // "PortaNave","Cristal","SemEnergia"		
+		// // float AnguloPorta = 10.0f;
+		// // //Vector3 NovaPosicaoPorta = new Vector3 (AnguloPorta, 90.0f, 90.0f);
+		// // objPortaNave.gameObject.transform.Rotate(new Vector3 (0.0f, 1.0f, 0.0f));
+		// AudioControler.rodarSom = "PortaNave"; // "PortaNave","Cristal","SemEnergia", "meteoro", "vooDaNave"
 	}
 
 	private void ControlaPortaNave()
@@ -41,6 +41,7 @@ public class PortaControler : MonoBehaviour {
 		if(varStatusPorta=="abrindo"){
 			//"", "abrindo", "fechando"
 			if(AnguloAtualPorta<=13.0f){
+				print("Abrindo Porta. PortaControler->ControlaPortaNave()");
 				AnguloAtualPorta = AnguloAtualPorta + 1.0f;
 				transform.Rotate(new Vector3 (0.0f, -1.0f, 0.0f));
 			}else{

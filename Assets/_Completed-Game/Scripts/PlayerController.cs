@@ -11,48 +11,45 @@ public class PlayerController : MonoBehaviour {
 	public float speed; // Velocidade do personagem.
 	
 	// Declarar os Campos de Text UI game objects.
-	public Text countText; // Contagem de cristais.
-	public Text winText; // Mensagem de inicio e fim de jogo.
-	public Text infoText; // Legendas.
 
+	public Text countText; // Contagem de cristais.
+	public Text TxtInfPontos; // Total de pontos da faze.
+
+	public Text infoText; // Legendas.
 	public Text tempoText; // Energia do personagem.
 
 	public Text energiaText; // Energia do personagem.
+	public Text ObjTxtInfFaseNivel; // Informação de Planeta e Nivel. 
 
 	public bool Movendo; // Personagem esta se movendo? sim ou não.
-	public bool PossueCrisal; // Personagem esta carregando cristal? sim ou não.
+	//public bool PossueCrisal; // Personagem esta carregando cristal? sim ou não.
 
-	public static string LetraMenuBut; //Botão de direção que foi clicado.
+	private string LetraMenuBut; //Botão de direção que foi clicado.
 
-	public static string LinguaGame; // Lingua do texto (ingles/Portugues)
+	public static string carregandocristal; //"","A","B","C","D","E"
+	
+	public static int LimpaCristais; // Total de cristais a serem limpos no laboratorio;
+
+
 	public Vector3 RotateAtual; // Vetor 3D da direção do Personagem.	
 	
-	public GameObject ObjCrisLab1; // Objeto 3D Cristal Laboratorio.
-	public GameObject ObjCrisLab2; // Objeto 3D Cristal Laboratorio.  
-	public GameObject ObjCrisLab3; // Objeto 3D Cristal Laboratorio.
-	public GameObject ObjCrisLab4; // Objeto 3D Cristal Laboratorio.
-	public GameObject ObjCrisLab5; // Objeto 3D Cristal Laboratorio.  
-	public GameObject ObjCrisLab6; // Objeto 3D Cristal Laboratorio.  
-	public GameObject ObjCrisLab7; // Objeto 3D Cristal Laboratorio.  
-	public GameObject ObjCrisLab8; // Objeto 3D Cristal Laboratorio.  
-	public GameObject ObjCrisLab9; // Objeto 3D Cristal Laboratorio.  
-	public GameObject ObjCrisLab10; // Objeto 3D Cristal Laboratorio.  
-	public GameObject ObjCrisLab11; // Objeto 3D Cristal Laboratorio.  
-	public GameObject ObjCrisLab12; // Objeto 3D Cristal Laboratorio.  
-	public GameObject ObjCrisMov; // Objeto cristal na garra do Robo. 
+	public GameObject[] ObjCritalNaGara; // Objeto 3D Cristal no terreno.
+
+	//public GameObject ObjCrisMov; // Objeto cristal na garra do Robo. 
 
 	public GameObject objPortaNave; // Objeto 3D Porta da nave
-	public GameObject ObjPainelMenu; // Menu Principal do game.
 
 	public GameObject ObjBarraEnergia; // Objeto UX ->  Barra de Energia.
 
 	public GameObject ObjBarraCristal; // Objeto UX -> Barra de cristal .
 	public GameObject ObjBarraTempo; // Objeto UX -> Barra de cristal .
 
+	public static int countCristais; // a contagem de objetos coletados até o momento
+	public static int Pontos; // Pontos da fase (TxtInfPontos);
 
 	// Declarando(Criando) variaveis privadas  
 	private Rigidbody rb; // CorpoRigido no personagem.
-	private int countCristais; // a contagem de objetos coletados até o momento
+
 	private int varEnergia; // Variavel de energia do personagem.
 	private int varTempo; // Variavel de Tempo da faze.
 
@@ -61,16 +58,27 @@ public class PlayerController : MonoBehaviour {
 
 	private int varNivelAtual;
 
+	private int limiteCargaCristais;
+
+	private GameObject objtemporario;// = FindObjectOfType<PortaNave>();
+
 	// === inicio do game =================
 	void Start ()
 	{
+
 		AnguloDestino=0;
 		AnguloAtual=0; // Direção que o corpo do robo esta.
-		PossueCrisal=false; //Ao iniciar não está carregando criatal.
-		LinguaGame="portugues"; // Lingua do texto (ingles/portugues)
+		//PossueCrisal=false; //Ao iniciar não está carregando criatal.
+		
+		controleMenu.LinguaGame="portugues"; // Lingua do texto (ingles/portugues)
 		countCristais = 0; // Total de cristais extraidos.
+		Pontos = 0;
 		varEnergia = 1000; // Energia inicia em 1000.
 
+		carregandocristal=""; // "","A","B","C","D","E"
+
+		funcCristalGarra("");
+	
 		IniciarNivel(1);
 
 		// Atribua o componente Rigidbody a variável privada rb (CorpoRigido no player)
@@ -79,13 +87,36 @@ public class PlayerController : MonoBehaviour {
 
 		infoText.text = VerificaLingua("Recolha os cristais.","Collect the crystals.");
 		// Defina a propriedade text da nossa interface de usuário do Win Text como uma string vazia,
-		winText.text = ""; // Deixando o campo 'Você Ganhou' (mensagem de game over) em branco.
-		//FuncAbrirPorta();
+		//winText.text = ""; // Deixando o campo 'Você Ganhou' (mensagem de game over) em branco.
+		//FuncAbrirPorta();	
+		Time.timeScale=1;
+	}
+
+
+	private void funcCristalGarra(string numObJCris){
+		// Esconder Cristais da Garra do Robo.
+		ObjCritalNaGara[0].gameObject.SetActive(false);
+		ObjCritalNaGara[1].gameObject.SetActive(false);
+		ObjCritalNaGara[2].gameObject.SetActive(false);
+		ObjCritalNaGara[3].gameObject.SetActive(false);
+		ObjCritalNaGara[4].gameObject.SetActive(false);
+		// Esconder cristais do laboratorio.
+		if(numObJCris=="A"){
+			ObjCritalNaGara[0].gameObject.SetActive(true);
+		}else if(numObJCris=="B"){
+			ObjCritalNaGara[1].gameObject.SetActive(true);
+		}else if(numObJCris=="C"){
+			ObjCritalNaGara[2].gameObject.SetActive(true);
+		}else if(numObJCris=="D"){
+			ObjCritalNaGara[3].gameObject.SetActive(true);
+		}else if(numObJCris=="E"){
+			ObjCritalNaGara[4].gameObject.SetActive(true);
+		}
 	}
 
 	private string VerificaLingua(string varTextoBr, string varTextoIng)
 	{
-		if(LinguaGame=="portugues"){
+		if(controleMenu.LinguaGame=="portugues"){
 			return varTextoBr;
 		}else{
 			return varTextoIng;
@@ -119,8 +150,8 @@ public class PlayerController : MonoBehaviour {
 
 	private void FuncBarraTempo()
 	{
-		//varEnergia de 0 até 1000 (0.0f=0) (0.1f=???) (0.3f=???) (0.5f=???) (0.8f=???) (1.0f=10000)
-		Vector3 PorcentagemBarra = new Vector3 (FuncCalcBarra(12,varTempo), 1.0f, 1.0f);
+		//varEnergia de 0 até 10000 (0.0f=0) (0.1f=???) (0.3f=???) (0.5f=???) (0.8f=???) (1.0f=10000)
+		Vector3 PorcentagemBarra = new Vector3 (FuncCalcBarra(10000,varTempo), 1.0f, 1.0f);
 		ObjBarraTempo.gameObject.transform.localScale = PorcentagemBarra;
 	}
 
@@ -130,6 +161,7 @@ public class PlayerController : MonoBehaviour {
 		if(moveHorizontal==0 & moveVertical>0){
 			//print("Subindo ^ ");
 			AnguloDestino = 180;
+			//FindObjectOfType<controleMenu>().GetComponent<controleMenu>().PainelMenuMostra();
 		}else if(moveHorizontal==0 & moveVertical<0){
 			//print("Descendo v ");
 			AnguloDestino = 0;
@@ -177,28 +209,110 @@ public class PlayerController : MonoBehaviour {
 
 	}
 
-
-
 	void LateUpdate ()
 	{	
-		if(varTempo>0){
-			varTempo = varTempo-1;
-			tempoText.text = VerificaLingua("Tempo : ","Time : ")+varTempo.ToString();
-			FuncBarraTempo();
-		}else if(varEnergia==0){
-			varEnergia = varEnergia-1;
-			AudioControler.rodarSom = "SemEnergia"; // "PortaNave","Cristal","SemEnergia"
-			infoText.text = VerificaLingua("Não conseguiu recolher os cristais a tempo.","He was unable to collect the crystals in time.");
-		}
+		if(Time.timeScale>0){
+			funcCristalGarra(carregandocristal);
+			if(varTempo>0){
+				varTempo = varTempo-1;
+				tempoText.text = VerificaLingua("Tempo : ","Time : ")+varTempo.ToString();
+				FuncBarraTempo();
+			}else if(varTempo==0){
+				varEnergia = 0;
+				//AudioControler.rodarSom = "SemEnergia"; // "PortaNave","Cristal","SemEnergia"
+				//winText.text = VerificaLingua("Não conseguiu recolher os cristais a tempo.","He was unable to collect the crystals in time.");
+				infoText.text = VerificaLingua("Não conseguiu recolher os cristais a tempo.","He was unable to collect the crystals in time.");
+				string TextoDeFimDeJogo = VerificaLingua("Não conseguiu recolher os cristais a tempo.","He was unable to collect the crystals in time.");
+				string TextoBotaoFimDeJogo = VerificaLingua("Voltar","Retur");
+				//FimFaseController.FimFaseController.PerdeuFimFase(VerificaLingua("Não conseguiu recolher os cristais a tempo.","He was unable to collect the crystals in time.")).
+				FindObjectOfType<FimFaseController>().GetComponent<FimFaseController>().PerdeuFimFase(TextoDeFimDeJogo,TextoBotaoFimDeJogo);
+			}
 
-		if(varEnergia>0){
-			varEnergia = varEnergia-1;
-			energiaText.text = VerificaLingua("Energia : ","Energy : ")+varEnergia.ToString();
-			FuncBarraEnergia();
-		}else if(varEnergia==0){
-			varEnergia = varEnergia-1;
-			AudioControler.rodarSom = "SemEnergia"; // "PortaNave","Cristal","SemEnergia"
-			infoText.text = VerificaLingua("Pouca energia. Volte a cabine.","Little energy. Go back to the cabin.");
+			if(varEnergia>0){
+				varEnergia = varEnergia-1;
+				energiaText.text = VerificaLingua("Energia : ","Energy : ")+varEnergia.ToString();
+				FuncBarraEnergia();
+			}else if(varEnergia<=0){
+				//varEnergia = varEnergia-1;
+				//AudioControler.rodarSom = "SemEnergia"; // "PortaNave","Cristal","SemEnergia"
+				infoText.text = VerificaLingua("Pouca energia. Volte a cabine.","Little energy. Go back to the cabin.");
+			}
+		}
+	}
+
+public void butPare(){
+		print("Clicou no Pare");
+		LetraMenuBut = "";
+	}
+public void butA(){
+		print("Clicou no A");
+		if(LetraMenuBut == "A"){
+			LetraMenuBut = "";
+		}else{
+			LetraMenuBut = "A";
+		}
+	}
+
+	public void butD(){
+		print("Clicou no D");
+		if(LetraMenuBut == "D"){
+			LetraMenuBut = "";
+		}else{
+			LetraMenuBut = "D";
+		}
+	}
+
+	public void butE(){
+		print("Clicou no E");
+		if(LetraMenuBut == "E"){
+			LetraMenuBut = "";
+		}else{
+			LetraMenuBut = "E";
+		}
+	}
+
+	public void butQ(){
+		print("Clicou no Q");
+		if(LetraMenuBut == "Q"){
+			LetraMenuBut = "";
+		}else{
+			LetraMenuBut = "Q";
+		}
+	}
+
+	public void butS(){
+		print("Clicou no S");
+		if(LetraMenuBut == "S"){
+			LetraMenuBut = "";
+		}else{
+			LetraMenuBut = "S";
+		}
+	}
+
+	public void butW(){
+		print("Clicou no W");
+		if(LetraMenuBut == "W"){
+			LetraMenuBut = "";
+		}else{
+			LetraMenuBut = "W";
+		}
+	}
+
+	public void butX(){
+		print("Clicou no X");
+		if(LetraMenuBut == "X"){
+			LetraMenuBut = "";
+		}else{
+			LetraMenuBut = "X";
+		}
+	}
+
+	public void butZ(){
+		print("Clicou no Z");
+		if(LetraMenuBut == "Z"){
+			LetraMenuBut = "";
+		}else{
+			LetraMenuBut = "Z";
 		}
 	}
 
@@ -214,8 +328,7 @@ public class PlayerController : MonoBehaviour {
 				print("Sair");
 				Application.Quit();
 			}else{
-				controleMenu.estadoPainelMenu=true;
-				ObjPainelMenu.gameObject.SetActive(true);
+				FindObjectOfType<controleMenu>().GetComponent<controleMenu>().PainelMenuMostra();
 			}
 		}else{
 			// Defina algumas variáveis flutuantes locais iguais ao valor de nossas entradas horizontais e verticais	
@@ -298,7 +411,7 @@ public class PlayerController : MonoBehaviour {
 	{
 	// Quando este objeto colidir com 'is trigger' marcado, 
 	// A variável 'other' recebe uma referência ao objeto colisor.
-
+		SetCountText();
 		if(other.gameObject.CompareTag("Tambor"))
 		{
 			// colidiu com um objeto com a tag 'Tambor'?
@@ -312,128 +425,122 @@ public class PlayerController : MonoBehaviour {
 			print("Cabine");
 			varEnergia = 2000;
 			infoText.text = VerificaLingua("A cabine recarrega sua bateria.","The cabin recharges its battery.");
+			Vector3 positEfeito = new Vector3 (objPortaNave.gameObject.transform.position.x-7.0f,objPortaNave.gameObject.transform.position.y+1.0f,objPortaNave.gameObject.transform.position.z+5.0f);
+			FindObjectOfType<controleEfeitos>().GetComponent<controleEfeitos>().funcEfeitoCristal2(positEfeito);
 		}
-		else if(other.gameObject.CompareTag("Laboratorio"))
-		{
-			// colidiu com um objeto com a tag 'Laboratorio'?
-			print("Laboratorio");
-			if(PossueCrisal){
-				PossueCrisal = false;
-				AudioControler.rodarSom = "Cristal"; // "PortaNave","Cristal","SemEnergia"
-				infoText.text = VerificaLingua("Deixou o cristal no laboratorio.","He left the crystal in the laboratory.");
-				// Add one to the score variable 'countCristais'
-				countCristais = countCristais + 1;
-				FuncBarraCristais();
-				ObjCrisMov.gameObject.SetActive(false);
-				if(countCristais==1){
-					ObjCrisLab1.gameObject.SetActive(true);
-				}else if(countCristais==2){
-					ObjCrisLab2.gameObject.SetActive(true);
-				}else if(countCristais==3){
-					ObjCrisLab3.gameObject.SetActive(true);
-				}else if(countCristais==4){
-					ObjCrisLab4.gameObject.SetActive(true);
-				}else if(countCristais==5){
-					ObjCrisLab5.gameObject.SetActive(true);
-				}else if(countCristais==6){
-					ObjCrisLab6.gameObject.SetActive(true);
-				}else if(countCristais==7){
-					ObjCrisLab7.gameObject.SetActive(true);
-				}else if(countCristais==8){
-					ObjCrisLab8.gameObject.SetActive(true);
-				}else if(countCristais==9){
-					ObjCrisLab9.gameObject.SetActive(true);
-				}else if(countCristais==10){
-					ObjCrisLab10.gameObject.SetActive(true);
-				}else if(countCristais==11){
-					ObjCrisLab11.gameObject.SetActive(true);
-				}else if(countCristais>12){
-					ObjCrisLab12.gameObject.SetActive(true);
-				}
-				SetCountText();
-			}else{
-				infoText.text = VerificaLingua("Este é o laboratorio.","This is the laboratory.");
-			}
-		}
-		else if(other.gameObject.CompareTag("Pick Up"))
-		{
-			// colidiu com um objeto com a tag 'Pick Up'?
-			AudioControler.rodarSom = "Cristal"; // "PortaNave","Cristal","SemEnergia"
-			if (PossueCrisal){
-				infoText.text = VerificaLingua("Só é possivel carregar um cristal.","It is only possible to carry a crystal.");
-			}else{
-				PossueCrisal = true;
-				//ObjetoCristal = other.gameObject;
-
-				// infoText.text = "pegou o " + other.gameObject.ToString;
-				
-				infoText.text = VerificaLingua("Pegou um criatal. Leve-o ao laboratorio.","He took a crystal. Take it to the laboratory.");
-				//nomeObjeto = "Pick Up (5) (UnityEngine.GameObject)";
-				
-				// Esconder cristal que foi extraido.
-				other.gameObject.SetActive(false);
-				
-				// Mostrar cristal na garra do Robo.
-				ObjCrisMov.gameObject.SetActive(true);
-			}
-		}
-
 	}
 
 	// função que verifique verifica pontos e muda mensagens de texto
 	void SetCountText()
 	{
-		if (countCristais >= 12) 
+		if (countCristais>=limiteCargaCristais)  //Pode ser de 1 a 12. (Cristais recolhidos no laboratorio)
 		{
+			//countCristais = 0;
 			if(varNivelAtual<3){
 				countText.text = VerificaLingua("Cristais : 0","Crystals : 0");
-				infoText.text = VerificaLingua("Desafio concuido. Vamos ao próximo nível.","Challenge met. Next level!");
-				//winText.text = VerificaLingua("Próximo nível!","Next level!");				
+				infoText.text = VerificaLingua("Desafio concuido. Pontos:"+Pontos.ToString(),"Challenge met. Score:"+Pontos.ToString());
+				string TextoDeFimDeJogo = VerificaLingua("Não conseguiu recolher os cristais a tempo.","He was unable to collect the crystals in time.");
+				string TextoBotaoFimDeJogo = VerificaLingua("Voltar","Retur");
 				IniciarNivel(varNivelAtual+1);
 				FuncFecharPorta();
 			}else{
+				//print("******* varNivelAtual="+varNivelAtual.ToString());
 				countText.text = VerificaLingua("Todos os Cristais.","All Crystals.");
-				infoText.text = VerificaLingua("Desafio concuido. Explore outros planetas.","Challenge met. Explore other planets.");
-				winText.text = VerificaLingua("Parabéns!","Congratulations!");
+				infoText.text = VerificaLingua("Desafio concuido. Explore outros planetas. Pontos:"+Pontos.ToString(),"Challenge met. Explore other planets. Score:"+Pontos.ToString());
+				//winText.text = VerificaLingua("Parabéns!\nDesafio concuido.\nExplore outros planetas. Pontos:"+Pontos.ToString(),"Congratulations!\nChallenge met.\nExplore other planets. Score:"+Pontos.ToString());
+				subirNivelJogador();
+				string textoFinal=VerificaLingua("Parabéns!\nDesafio concuido. Pontos:"+Pontos.ToString()+".\nExplore outros planetas.","Congratulations!\nChallenge met. Score:"+Pontos.ToString()+".\nExplore other planets.");
+				string textoBt="Novo Destino";
+				int trofeus=1;
+				if(Pontos>880){
+					trofeus=3;
+				}else if(Pontos>440){ 
+					trofeus=2;
+				}
+				FindObjectOfType<FimFaseController>().GetComponent<FimFaseController>().GanhoFimFase(textoFinal, textoBt, trofeus);
 			}
 		}
 		else
 		{
+			TxtInfPontos.text = "Pontos "+ Pontos.ToString();
 			infoText.text = VerificaLingua("Pegue outro cristal.","Take another crystal.");
 			countText.text = VerificaLingua("Cristais : ","Crystals : " )+ countCristais.ToString ();
 		}
 	}
 
-	private void IniciarNivel(int varProximoNivel){
-		varNivelAtual = varProximoNivel;
-		countCristais = 0;
+	private void subirNivelJogador()
+	{
+		print("PlayerController -> subirNivelJogador()");
+		if(controleMenu.nivelJogador>=5){
+				print("*******************nivelJogador+=1");
+				controleMenu.nivelJogador=controleMenu.nivelJogador+1;
+		}else if(controleMenu.CenarioAtualstatic=="Marte"){
+			if(controleMenu.nivelJogador<1){
+				print("*******************nivelJogador=1");
+				controleMenu.nivelJogador=1; // Subir nivel do Jogador 
+			}
+		}else if(controleMenu.CenarioAtualstatic=="Lua"){
+			if(controleMenu.nivelJogador<2){
+				print("*******************nivelJogador=2");
+				controleMenu.nivelJogador=2; // Subir variavel nivel do Jogador 
+			}
+		}else if(controleMenu.CenarioAtualstatic=="Plutao"){
+			if(controleMenu.nivelJogador<3){
+				controleMenu.nivelJogador=3; // Subir variavel nivel do Jogador 
+				print("*******************nivelJogador=3");
+			}
+		}else if(controleMenu.CenarioAtualstatic=="Mercurio"){
+			if(controleMenu.nivelJogador<4){
+				controleMenu.nivelJogador=4; // Subir variavel nivel do Jogador
+				print("*******************nivelJogador=4");
+			}
+		}else if(controleMenu.CenarioAtualstatic=="Venus"){
+			if(controleMenu.nivelJogador<5){
+				controleMenu.nivelJogador=5; // Subir variavel nivel do Jogador
+				print("*******************nivelJogador=5");
+			} 
+		} 
+	} 
 		
-		varTempo = 10000; // O Tempo da Faze.
-	
-		// Esconder cristais do laboratorio.
-		ObjCrisLab1.gameObject.SetActive(false);		
-		ObjCrisLab2.gameObject.SetActive(false);
-		ObjCrisLab3.gameObject.SetActive(false);
-		ObjCrisLab4.gameObject.SetActive(false);
-		ObjCrisLab5.gameObject.SetActive(false);
-		ObjCrisLab6.gameObject.SetActive(false);
-		ObjCrisLab7.gameObject.SetActive(false);
-		ObjCrisLab8.gameObject.SetActive(false);
-		ObjCrisLab9.gameObject.SetActive(false);
-		ObjCrisLab10.gameObject.SetActive(false);
-		ObjCrisLab11.gameObject.SetActive(false);
-		ObjCrisLab12.gameObject.SetActive(false);
-		ObjCrisMov.gameObject.SetActive(false);
 
-		print("Iniciando Nivel "+ varProximoNivel.ToString() + ". (script player)");
-		// Debug.log("log-Inicou o GAME.");
+	private void IniciarNivel(int varProximoNivel)
+	{
+		ObjTxtInfFaseNivel.text = controleMenu.CenarioAtualstatic + " nivel "+varProximoNivel.ToString();
+
+		print("PlayerController->IniciarNivel(varProximoNivel)");
+		varNivelAtual = varProximoNivel; // Nivel da fase;
+		countCristais = 0;
+		int ajusteTempoNivel=controleMenu.nivelJogador*100+varProximoNivel*100;
+		if(ajusteTempoNivel>9000){
+			ajusteTempoNivel=9000;
+		}
+		varTempo = 10000-ajusteTempoNivel; // O Tempo da Faze.
+		LimpaCristais = 12; // Limpar os 12 cristais do laboratorio;
 		
-		//AudioControler.rodarSom = "VoodaNave";
+		if(varNivelAtual==1){
+			limiteCargaCristais=5;
+		}else if(varNivelAtual==2){
+			limiteCargaCristais=7;
+		}else{
+			limiteCargaCristais=9;
+		}
+ 
+		print("Iniciando Nivel "+ varProximoNivel.ToString() + ". (script player)");
+		AudioControler.rodarSom = "VoodaNave";
 		NaveControler.varStatusNave="nivel"+varProximoNivel.ToString();
 	}
 
 	private void FuncFecharPorta()
 	{
+		//FindObjectOfType<controleMenu>().GetComponent<controleMenu>().PainelMenuMostra();
+		//FindObjectOfType<game_porta_nave>().GetComponent<PortaControler>().AbrirPorta();
+		//FindObjectOfType<Nave>().FindObjectOfType<PortaNave>().GetComponent<PortaControler>().FecharPorta();
+		//FindObjectOfType<PortaNave>().GetComponent<PortaControler>().FecharPorta();
+		//FindObjectOfType<PortaNave>().GetComponent<PortaControler>().FecharPorta();
+
+		//objtemporario = FindObjectOfType<Nave>();
+		//objtemporario.GetComponent<PortaControler>().FecharPorta();;
+
 		PortaControler.varStatusPorta = "fechando"; //"", "abrindo", "fechando"
 		AudioControler.rodarSom = "PortaNave"; // "PortaNave","Cristal","SemEnergia"		
 	}

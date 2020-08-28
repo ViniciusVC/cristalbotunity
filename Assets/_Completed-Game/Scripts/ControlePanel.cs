@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class ControlePanel : MonoBehaviour {
 
+	// //acho que este script não está sendo utilisado.
 
+	// // void Start () {
+	// 	// Não faz nada na inicialização
+	// // }
 
-	// void Start () {
-		// Não faz nada na inicialização
+	// public void MostrarPainel(){
+	// 	print("Fechar PainelMenu");
+
 	// }
 
-	public void MostrarPainel(){
-		print("Fechar PainelMenu");
+	// public void EsconderPainel(){
+	// 	print("Mostrar panelCreditos");
 
-	}
-
-	public void EsconderPainel(){
-		print("Mostrar panelCreditos");
-
-	}
-
-	// void Update () {
-		// Não faz nada no Update
 	// }
+
+	// // void Update () {
+	// 	// Não faz nada no Update
+	// // }
 
 }

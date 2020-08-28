@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+// Verificar se está sendo usado.
 
 public class Cristal : MonoBehaviour {
 

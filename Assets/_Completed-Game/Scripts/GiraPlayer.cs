@@ -4,28 +4,28 @@ using UnityEngine;
 
 public class GiraPlayer : MonoBehaviour {
 
-	public GameObject player;
+	// public GameObject player;
 	
-	public static bool Movendo; //player speed
+	// public static bool Movendo; //player speed
 
-	public bool GirandoRobo;
+	// public bool GirandoRobo;
 	
-	void Start (){
-		GirandoRobo = true;
-	}	
+	// void Start (){
+	// 	GirandoRobo = true;
+	// }	
 
-	void LateUpdate ()
-	{
-		GirandoRobo = Movendo;  // Input.GetAxis("Movendo");
+	// void LateUpdate ()
+	// {
+	// 	GirandoRobo = Movendo;  // Input.GetAxis("Movendo");
 
-		//Robo esta em movimento?
-		if(GirandoRobo){
-			//Girar rodas do Robo.
-			print("Girando a roda");
-			transform.Rotate (new Vector3 (20, 0, 0));
-		}else{
-			print("parou a roda");
-			//transform.Rotate (new Vector3 (0, 0, 0));
-		}
-	}
+	// 	//Robo esta em movimento?
+	// 	if(GirandoRobo){
+	// 		//Girar rodas do Robo.
+	// 		print("Girando a roda");
+	// 		transform.Rotate (new Vector3 (20, 0, 0));
+	// 	}else{
+	// 		print("parou a roda");
+	// 		//transform.Rotate (new Vector3 (0, 0, 0));
+	// 	}
+	// }
 }
