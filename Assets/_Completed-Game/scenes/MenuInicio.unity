@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.37311918, g: 0.38073993, b: 0.35872698, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -139,7 +139,6 @@ MonoBehaviour:
   ObjPainelCreditos: {fileID: 1381205146}
   ObjPainelPlaneta: {fileID: 450494097}
   ObjPainelLingua: {fileID: 1875081879}
-  ObjPainelFimFase: {fileID: 1698931394}
   TxtPanPlanetasTitulo: {fileID: 1689342430}
   TxtPanPlanetasVoltar: {fileID: 1843823407}
   TxtPanPlanetasMercurio: {fileID: 753633805}
@@ -1568,7 +1567,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -21.000252, y: -23.000067}
+  m_AnchoredPosition: {x: -21, y: -23}
   m_SizeDelta: {x: 25, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1111878855
@@ -2110,7 +2109,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1868223937232122, guid: ef45d712d72b145438abbb6e3e080a9b, type: 2}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 114353298425136442, guid: ef45d712d72b145438abbb6e3e080a9b,
         type: 2}
@@ -2350,6 +2349,14 @@ Prefab:
       propertyPath: m_RootOrder
       value: 7
       objectReference: {fileID: 0}
+    - target: {fileID: 1835500885442802, guid: ef45d712d72b145438abbb6e3e080a9b, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1397201817219092, guid: ef45d712d72b145438abbb6e3e080a9b, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: ef45d712d72b145438abbb6e3e080a9b, type: 2}
   m_IsPrefabParent: 0
@@ -2570,11 +2577,6 @@ MonoBehaviour:
     type: 2}
   m_PrefabInternal: {fileID: 1539404656}
   m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
---- !u!1 &1698931394 stripped
-GameObject:
-  m_PrefabParentObject: {fileID: 1424455164834648, guid: 84bd9c557ef374eaeae81097ee782010,
-    type: 2}
-  m_PrefabInternal: {fileID: 310277949}
 --- !u!224 &1698931395 stripped
 RectTransform:
   m_PrefabParentObject: {fileID: 224123085640466138, guid: 84bd9c557ef374eaeae81097ee782010,

@@ -21,6 +21,7 @@ public class PlayerController : MonoBehaviour {
 	public Text energiaText; // Energia do personagem.
 	public Text ObjTxtInfFaseNivel; // Informação de Planeta e Nivel. 
 
+	public Text objTxtInfFaseNivel; //Informa em que Planeta esta e qual nivel atural.
 	public bool Movendo; // Personagem esta se movendo? sim ou não.
 	//public bool PossueCrisal; // Personagem esta carregando cristal? sim ou não.
 
@@ -70,7 +71,7 @@ public class PlayerController : MonoBehaviour {
 		AnguloAtual=0; // Direção que o corpo do robo esta.
 		//PossueCrisal=false; //Ao iniciar não está carregando criatal.
 		
-		controleMenu.LinguaGame="portugues"; // Lingua do texto (ingles/portugues)
+		//controleMenu.LinguaGame="portugues"; // Lingua do texto (ingles/portugues)
 		countCristais = 0; // Total de cristais extraidos.
 		Pontos = 0;
 		varEnergia = 1000; // Energia inicia em 1000.
@@ -86,9 +87,7 @@ public class PlayerController : MonoBehaviour {
 		SetCountText ();
 
 		infoText.text = VerificaLingua("Recolha os cristais.","Collect the crystals.");
-		// Defina a propriedade text da nossa interface de usuário do Win Text como uma string vazia,
-		//winText.text = ""; // Deixando o campo 'Você Ganhou' (mensagem de game over) em branco.
-		//FuncAbrirPorta();	
+
 		Time.timeScale=1;
 	}
 
@@ -129,7 +128,6 @@ public class PlayerController : MonoBehaviour {
 		// Pegue o número menor, divida pelo maior, e em seguida multiplique por cem.
 		// Vai de 0% a 100%. Mas eu quero de 0 a 1. Dividir por 100 (Ex.:0,0 0,01 0,50 0,90 1,00)
 		float varCalcSaida= (float)varCalcInicial/(float)valorMax;
-		//print("varCalcSaida="+ varCalcSaida.ToString());
 		return varCalcSaida;
 	}
 	
@@ -143,8 +141,9 @@ public class PlayerController : MonoBehaviour {
 
 	private void FuncBarraCristais()
 	{
+		float valorBarraCristais = FuncCalcBarra(limiteCargaCristais,countCristais);
 		//varEnergia de 0 até 1000 (0.0f=0) (0.1f=1) (0.3f=3) (0.5f=6) (0.8f=9) (1.0f=12)
-		Vector3 PorcentagemBarra = new Vector3 (FuncCalcBarra(12,countCristais), 1.0f, 1.0f);
+		Vector3 PorcentagemBarra = new Vector3 (valorBarraCristais, 1.0f, 1.0f);
 		ObjBarraCristal.gameObject.transform.localScale = PorcentagemBarra;
 	}
 
@@ -439,8 +438,8 @@ public void butA(){
 			if(varNivelAtual<3){
 				countText.text = VerificaLingua("Cristais : 0","Crystals : 0");
 				infoText.text = VerificaLingua("Desafio concuido. Pontos:"+Pontos.ToString(),"Challenge met. Score:"+Pontos.ToString());
-				string TextoDeFimDeJogo = VerificaLingua("Não conseguiu recolher os cristais a tempo.","He was unable to collect the crystals in time.");
-				string TextoBotaoFimDeJogo = VerificaLingua("Voltar","Retur");
+				//string TextoDeFimDeJogo = VerificaLingua("Não conseguiu recolher os cristais a tempo.","He was unable to collect the crystals in time.");
+				//string TextoBotaoFimDeJogo = VerificaLingua("Voltar","Retur");
 				IniciarNivel(varNivelAtual+1);
 				FuncFecharPorta();
 			}else{
@@ -462,9 +461,10 @@ public void butA(){
 		}
 		else
 		{
-			TxtInfPontos.text = "Pontos "+ Pontos.ToString();
+			TxtInfPontos.text = VerificaLingua("Pontos:"+ Pontos.ToString(),"Score:"+ Pontos.ToString());
 			infoText.text = VerificaLingua("Pegue outro cristal.","Take another crystal.");
 			countText.text = VerificaLingua("Cristais : ","Crystals : " )+ countCristais.ToString ();
+			FuncBarraCristais();
 		}
 	}
 
@@ -518,14 +518,15 @@ public void butA(){
 		LimpaCristais = 12; // Limpar os 12 cristais do laboratorio;
 		
 		if(varNivelAtual==1){
-			limiteCargaCristais=5;
+			limiteCargaCristais=5; //5
 		}else if(varNivelAtual==2){
-			limiteCargaCristais=7;
+			limiteCargaCristais=7; //7
 		}else{
-			limiteCargaCristais=9;
+			limiteCargaCristais=9; //9
 		}
  
 		print("Iniciando Nivel "+ varProximoNivel.ToString() + ". (script player)");
+		objTxtInfFaseNivel.text = controleMenu.CenarioAtualstatic + " : " +varProximoNivel.ToString();
 		AudioControler.rodarSom = "VoodaNave";
 		NaveControler.varStatusNave="nivel"+varProximoNivel.ToString();
 	}

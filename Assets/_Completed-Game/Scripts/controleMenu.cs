@@ -12,7 +12,7 @@ public class controleMenu : MonoBehaviour {
 	public GameObject ObjPainelCreditos; // Painel com os créditos do jogo.
 	public GameObject ObjPainelPlaneta; // Painel onde o jogador escolhe o cenario.
 	public GameObject ObjPainelLingua; // Painel onde o jogador escolhe a lingua do jogo.
-	public GameObject ObjPainelFimFase; // Painel onde mostra a mensagem de parabéns.
+	//public GameObject ObjPainelFimFase; // Painel onde mostra a mensagem de parabéns.
 	public Text TxtPanPlanetasTitulo; // Titulo do Painel de Planetas
 	public Text TxtPanPlanetasVoltar; // Texto botão voltar do Painel de Planetas
 	public Text TxtPanPlanetasMercurio;
@@ -51,47 +51,15 @@ public class controleMenu : MonoBehaviour {
 
 	void Start()
 	{
-		//int contVogais = 0;
-		//int contConsoante = 0;
-		// listaNomes[0] = Consoante[contConsoante+4]+Vogais[contVogais];
-		// listaNomes[1] = Consoante[contConsoante+3]+Vogais[contVogais+1];
-		// listaNomes[2] = Consoante[contConsoante+2]+Vogais[contVogais+2];
-		// listaNomes[3] = Consoante[contConsoante+1]+Vogais[contVogais+3];
-		// listaNomes[4] = Consoante[contConsoante+0]+Vogais[contVogais+4];
-		// listaNomes[5] = listaNomes[4]+Consoante[contConsoante+5]+Vogais[contVogais];
-		// listaNomes[6] = listaNomes[3]+Consoante[contConsoante+6]+Vogais[contVogais+1];
-		// listaNomes[7] = listaNomes[2]+Consoante[contConsoante+7]+Vogais[contVogais+2];
-		// listaNomes[8] = listaNomes[1]+Consoante[contConsoante+8]+Vogais[contVogais+3];
-		// listaNomes[9] = listaNomes[0]+Consoante[contConsoante+9]+Vogais[contVogais+4];
-		// listaNomes[0] = listaNomes[4]+Consoante[contConsoante+4]+Vogais[contVogais];
-		// listaNomes[1] = listaNomes[3]+Consoante[contConsoante+3]+Vogais[contVogais+1];
-		// listaNomes[2] = listaNomes[2]+Consoante[contConsoante+2]+Vogais[contVogais+2];
-		// listaNomes[3] = listaNomes[1]+Consoante[contConsoante+1]+Vogais[contVogais+3];
-		// listaNomes[4] = listaNomes[0]+Consoante[contConsoante+0]+Vogais[contVogais+4];
 
-		if(estadoPainelMenu!=true){
-			print("Iniciar variavel do Painel Menu (static bool).");
-			estadoPainelMenu=false; // Iniciar variavel do Painel Menu (static bool).
-		}
-		if(estadoPainelDirecional!=true){
-			print("Iniciando estadoPainelDirecional");
-			estadoPainelDirecional=false; // Iniciar estadoPainelDirecional.
-		}
-		if(estadoPainelLingua!=true){
-			print("Iniciando estadoPainelLingua");
-			estadoPainelLingua=false;; // Iniciar estadoPainelDirecional.
-		}
 		CenarioAtualstatic=CenarioAtual;
+		estadoPainelMenu=false; // Iniciar variavel do Painel Menu (static bool).
+		estadoPainelDirecional=false; // Iniciar estadoPainelDirecional.
+		estadoPainelLingua=false; // Iniciar estadoPainelDirecional.
 		estadoPainelCreditos=false;
 		estadoPainelPlaneta=false;
-
-		if(nivelJogador!=1&&nivelJogador!=2&&nivelJogador!=3&&nivelJogador!=4&&nivelJogador!=5){
-			print(" iniciar variavel nivel do Jogador (nivelJogador==null)");
-		 	nivelJogador=0; // iniciar variavel nivel do Jogador (nivelJogador==null)
-		}
-
-		if(LinguaGame!="ingles"){
-			print("Usar LINGUA portugues como padrão.");
+		if(CenarioAtual=="MenuInicial"){
+			nivelJogador=0; // iniciar variavel nivel do Jogador
 			LinguaGame="portugues"; //"portugues","ingles"
 		}
 	}
@@ -164,7 +132,7 @@ public class controleMenu : MonoBehaviour {
 		}else{
 			estadoPainelCreditos=true;
 			ObjPainelCreditos.gameObject.SetActive(estadoPainelCreditos);
-			TxtCreditos.text = VerificaLingua("Jogo Cristal Bot v. 0.2 Beta.\n Autor : Vinicius Valente  Coutinho.\n Desenvolvido na Unity com C#.\n Modelagem 3D no Blender.","Game Cristal Bot v. 0.2 Beta.\n Author: Vinicius Valente Coutinho.\n Developed at Unity with C #.\n 3D modeling in Blender.");
+			TxtCreditos.text = VerificaLingua("Jogo Cristal Bot v. 0.2 Beta.\nAutor : Vinicius Valente  Coutinho.\nDesenvolvido na Unity com C#.\nModelagem 3D no Blender.","Game Cristal Bot v. 0.2 Beta.\nAuthor: Vinicius Valente Coutinho.\nDeveloped at Unity with C #.\n3D modeling in Blender.");
 			TxtCreditosBtVolta.text = VerificaLingua("Voltar","Return");
 		}
 	}
@@ -184,7 +152,11 @@ public class controleMenu : MonoBehaviour {
 	public void MudouLingPort(){
 		LinguaGame = "portugues"; //"portugues","ingles"
 		PanelLinguaMostra();
-		objTxtMenuBtJogar.text ="Voltar ao jogo"; // Botão de Jogar no menu principal
+		if(CenarioAtual=="MenuInicial"){
+			objTxtMenuBtJogar.text ="Iniciar jogo"; // Botão de Jogar no menu principal
+		}else{
+			objTxtMenuBtJogar.text ="Voltar ao jogo"; // Botão de Jogar no menu principal
+		}
 		objTxtMenuBtCreditos.text="Creditos"; // Botão de Creditos no menu principal
 		objTxtMenuBtSair.text="Sair do jogo"; // Botão de Sair do Jogo no menu principal
 		objTxtMenuBtPlanetas.text="Escolher planeta"; // Botão Escolher Planetas no menu principal
@@ -194,7 +166,11 @@ public class controleMenu : MonoBehaviour {
 	public void MudouLingIngl(){
 		LinguaGame = "ingles"; //"portugues","ingles"
 		PanelLinguaMostra();
-		objTxtMenuBtJogar.text ="Back in the game"; // Botão de Jogar no menu principal
+		if(CenarioAtual=="MenuInicial"){
+			objTxtMenuBtJogar.text ="Start game"; // Botão de Jogar no menu principal
+		}else{
+			objTxtMenuBtJogar.text ="Back in the game"; // Botão de Jogar no menu principal
+		}		
 		objTxtMenuBtCreditos.text="Credits"; // Botão de Creditos no menu principal
 		objTxtMenuBtSair.text="Quit game"; // Botão de Sair do Jogo no menu principal
 		objTxtMenuBtPlanetas.text="Choose planet"; // Botão Escolher Planetas no menu principal

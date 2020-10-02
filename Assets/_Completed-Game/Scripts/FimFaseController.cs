@@ -25,7 +25,7 @@ public class FimFaseController : MonoBehaviour {
 	}
 	
 	public void PerdeuFimFase(string textoFinal, string textoBt){
-			Time.timeScale=1;
+			Time.timeScale=0;
 			if(textoFinal==""){
 				textoFinal="Perdeu[lose]";
 			}
@@ -38,7 +38,7 @@ public class FimFaseController : MonoBehaviour {
 	}
 
 	public void GanhoFimFase(string textoFinal, string textoBt, int patente){
-			Time.timeScale=1;
+			Time.timeScale=0;
 			if(textoFinal==""){
 				textoFinal="Parabéns![Congratulations!]";
 			}
